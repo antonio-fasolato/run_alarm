@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(const RunAlarmApp());
@@ -12,19 +13,19 @@ class RunAlarmApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Run alarm',
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
       ),
-      home: const TrainingList(title: 'Allenamenti'),
+      home: const TrainingList(),
     );
   }
 }
 
 class TrainingList extends StatefulWidget {
-  const TrainingList({super.key, required this.title});
-
-  final String title;
+  const TrainingList({super.key});
 
   @override
   State<TrainingList> createState() => _TrainingListState();
@@ -44,7 +45,7 @@ class _TrainingListState extends State<TrainingList> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(AppLocalizations.of(context)!.trainings),
       ),
       body: Center(
         child: Column(
