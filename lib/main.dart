@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const RunAlarmApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class RunAlarmApp extends StatelessWidget {
+  const RunAlarmApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -16,21 +16,21 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Allenamenti'),
+      home: const TrainingList(title: 'Allenamenti'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class TrainingList extends StatefulWidget {
+  const TrainingList({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<TrainingList> createState() => _TrainingListState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _TrainingListState extends State<TrainingList> {
   int _counter = 0;
 
   void _incrementCounter() {
