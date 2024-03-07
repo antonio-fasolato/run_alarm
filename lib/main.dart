@@ -81,11 +81,7 @@ class _TrainingListState extends State<TrainingList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.read<AppState>().addTraining(TrainingDao(
-                id: const Uuid().v4(),
-                title: "title",
-                subtitle: "subtitle",
-              ));
+          context.read<AppState>().addTraining(TrainingDao.empty());
         },
         tooltip: i18n.homeAdd,
         child: const Icon(Icons.add),
