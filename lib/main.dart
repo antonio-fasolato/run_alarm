@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:run_alarm/dao/training_dao.dart';
+import 'package:run_alarm/state/app_state.dart';
+import 'package:run_alarm/training_tile.dart';
+import 'package:uuid/uuid.dart';
 
 void main() {
-  runApp(const RunAlarmApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AppState()),
+      ],
+      child: const RunAlarmApp(),
+    ),
+  );
 }
 
 class RunAlarmApp extends StatelessWidget {
@@ -32,38 +44,36 @@ class TrainingList extends StatefulWidget {
 }
 
 class _TrainingListState extends State<TrainingList> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    var i18n = AppLocalizations.of(context);
+    if (i18n == null) {
+      throw Exception("No localization");
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(AppLocalizations.of(context)!.trainings),
+        title: Text(i18n.homeTitle),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        child: ListView(
+          children: context
+              .watch<AppState>()
+              .trainings
+              .map((e) => TrainingTile(training: e))
+              .toList(),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: () {
+          context.read<AppState>().addTraining(TrainingDao(
+                id: const Uuid().v4(),
+                title: "title",
+                subtitle: "subtitle",
+              ));
+        },
+        tooltip: i18n.homeAdd,
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

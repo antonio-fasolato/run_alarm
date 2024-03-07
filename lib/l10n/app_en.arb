@@ -1,6 +1,7 @@
 {
-  "trainings": "Trainings",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  }
+  "homeAdd": "New training",
+  "homeNoElements": "No trainings yet. Add one with the button below.",
+  "homeTitle": "Trainings",
+  "trainingTileSubtitle": "Information about the training",
+  "trainingTileTitle": "Training"
 }

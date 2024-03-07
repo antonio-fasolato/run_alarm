@@ -1,3 +1,7 @@
 {
-  "trainings": "Allenamenti"
+  "homeAdd": "Nuovo allenamento",
+  "homeNoElements": "Ancora nessun allenamento. Aggiungine uno con il pulsante in basso",
+  "homeTitle": "Allenamenti",
+  "trainingTileSubtitle": "Informazioni sull'allenamento",
+  "trainingTileTitle": "Allenamento"
 }
