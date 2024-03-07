@@ -20,8 +20,8 @@ class TrainingTile extends StatelessWidget {
     }
 
     return ListTile(
-      title: Text(i18n.trainingTileTitle),
-      subtitle: Text(i18n.trainingTileSubtitle),
+      title: Text(_training.title),
+      subtitle: Text(_training.subtitle),
       trailing: IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () {
