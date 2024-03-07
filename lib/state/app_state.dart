@@ -6,6 +6,12 @@ class AppState with ChangeNotifier, DiagnosticableTreeMixin  {
 
   List<TrainingDao> get trainings => _trainings;
 
+  setTrainings(List<TrainingDao> l) {
+    _trainings.clear();
+    _trainings.addAll(l);
+    notifyListeners();
+  }
+
   addTraining(TrainingDao training) {
     _trainings.add(training);
     notifyListeners();

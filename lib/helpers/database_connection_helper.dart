@@ -29,12 +29,12 @@ class DatabaseConnectionHelper {
     return _database as Database;
   }
 
-  connect() async {
+  Future<Database> connect() async {
     WidgetsFlutterBinding.ensureInitialized();
 
     if (isConnected) {
       log.info("Database already connected");
-      return;
+      return _database as Database;
     }
 
     var databasePath = join(await getDatabasesPath(), 'run_app.db');
@@ -53,15 +53,27 @@ class DatabaseConnectionHelper {
     if (newFile) {
       await _initDb(_database as Database);
     }
+
+    return _database as Database;
   }
 
   Future<void> _initDb(Database db) async {
     log.info("Initializing new database");
 
     var sql = '''
-      CREATE TABLE DB_VERSION(id PRIMARY KEY)
+      CREATE TABLE DB_VERSION(id INTEGER PRIMARY KEY)
     ''';
     await db.execute(sql);
     await db.insert('DB_VERSION', {"id": 1});
+
+    sql = '''
+      CREATE TABLE TRAININGS(
+        id STRING PRIMARY KEY,
+        title STRING NOT NULL,
+        description STRING NOT NULL DEFAULT(''),
+        created_at STRING NOT NULL DEFAULT(datetime())
+      )
+    ''';
+    await db.execute(sql);
   }
 }
