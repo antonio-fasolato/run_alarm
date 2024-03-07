@@ -1,0 +1,32 @@
+name: 'Build APK'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  build:
+    # The `runs-on` key in this example configures the job to run on a GitHub-hosted runner or a self-hosted runner, depending on the repository running the workflow. 
+    # 
+    # In this example, the job will run on a self-hosted runner if the repository is named `docs-internal` and is within the `github` organization. If the repository doesn't match this path, then it will run on an `ubuntu-latest` runner hosted by GitHub. For more information on these options, see "[AUTOTITLE](/actions/using-jobs/choosing-the-runner-for-a-job)."
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.9'
+          channel: 'stable'
+      - name: test
+        run: flutter --version
