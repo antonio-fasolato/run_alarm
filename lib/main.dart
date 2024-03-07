@@ -1,12 +1,27 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:run_alarm/dao/training_dao.dart';
+import 'package:run_alarm/helpers/database_connection_helper.dart';
+import 'package:run_alarm/helpers/trainings_helper.dart';
 import 'package:run_alarm/state/app_state.dart';
 import 'package:run_alarm/training_tile.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
+  Logger.root.onRecord.listen((record) {
+    debugPrint(
+        '${record.time}: ${record.level.name} [${record.loggerName}]: ${record.message}');
+  });
+  Logger.root.level = Level.WARNING;
+  if (kDebugMode) {
+    Logger.root.level = Level.ALL;
+    var log = Logger('main');
+    log.info("Application started in debug mode");
+  }
+
   runApp(
     MultiProvider(
       providers: [
@@ -45,6 +60,19 @@ class TrainingList extends StatefulWidget {
 
 class _TrainingListState extends State<TrainingList> {
   @override
+  void initState() {
+    super.initState();
+
+    _loadTrainings();
+  }
+
+  _loadTrainings() async {
+    context
+        .read<AppState>()
+        .setTrainings(await TrainingsHelper.getAllTrainings());
+  }
+
+  @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
     if (i18n == null) {
@@ -67,11 +95,7 @@ class _TrainingListState extends State<TrainingList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.read<AppState>().addTraining(TrainingDao(
-                id: const Uuid().v4(),
-                title: "title",
-                subtitle: "subtitle",
-              ));
+          context.read<AppState>().addTraining(TrainingDao.empty());
         },
         tooltip: i18n.homeAdd,
         child: const Icon(Icons.add),

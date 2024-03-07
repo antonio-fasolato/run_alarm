@@ -1,11 +1,16 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:run_alarm/dao/training_dao.dart';
 
 class AppState with ChangeNotifier, DiagnosticableTreeMixin  {
-  List<TrainingDao> _trainings = [];
+  final List<TrainingDao> _trainings = [];
 
   List<TrainingDao> get trainings => _trainings;
+
+  setTrainings(List<TrainingDao> l) {
+    _trainings.clear();
+    _trainings.addAll(l);
+    notifyListeners();
+  }
 
   addTraining(TrainingDao training) {
     _trainings.add(training);
