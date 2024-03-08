@@ -1,5 +1,7 @@
 {
   "homeAdd": "Nuovo allenamento",
   "homeNoElements": "Ancora nessun allenamento. Aggiungine uno con il pulsante in basso",
-  "homeTitle": "Allenamenti"
+  "homeTitle": "Allenamenti",
+  "trainingTileConfirmDelete": "Cancellare l'allenamento?",
+  "trainingTileConfirmDeleteSubtitle": "La cancellazione è permanente"
 }

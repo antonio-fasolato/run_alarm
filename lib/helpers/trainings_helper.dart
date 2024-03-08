@@ -9,4 +9,10 @@ class TrainingsHelper {
     var res = await db.query('TRAININGS', orderBy: "created_at");
     return res.map((row) => TrainingDao.fromMap(row)).toList();
   }
+
+  static Future<int> deleteTraining(String id) async {
+    Database db = await DatabaseConnectionHelper().connect();
+
+    return await db.delete('TRAININGS', where: "id = ?", whereArgs: [id]);
+  }
 }

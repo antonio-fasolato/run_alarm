@@ -4,11 +4,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:run_alarm/dao/training_dao.dart';
-import 'package:run_alarm/helpers/database_connection_helper.dart';
 import 'package:run_alarm/helpers/trainings_helper.dart';
 import 'package:run_alarm/state/app_state.dart';
 import 'package:run_alarm/training_tile.dart';
-import 'package:uuid/uuid.dart';
 
 void main() {
   Logger.root.onRecord.listen((record) {
