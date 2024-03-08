@@ -1,7 +1,10 @@
 {
+  "cancel": "Cancel",
   "homeAdd": "New training",
+  "homeNewTrainig": "New training",
   "homeNoElements": "No trainings yet. Add one with the button below.",
   "homeTitle": "Trainings",
+  "ok": "Ok",
   "trainingTileConfirmDelete": "Really delete the training?",
   "trainingTileConfirmDeleteSubtitle": "The deletion is permanent"
 }

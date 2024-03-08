@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:run_alarm/components/training_popup.dart';
 import 'package:run_alarm/dao/training_dao.dart';
 import 'package:run_alarm/helpers/trainings_helper.dart';
 import 'package:run_alarm/state/app_state.dart';
 import 'package:run_alarm/training_tile.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 void main() {
   Logger.root.onRecord.listen((record) {
@@ -70,6 +72,65 @@ class _TrainingListState extends State<TrainingList> {
         .setTrainings(await TrainingsHelper.getAllTrainings());
   }
 
+  _buildPopup() {
+    var i18n = AppLocalizations.of(context);
+    if (i18n == null) {
+      throw Exception("No localization");
+    }
+
+    var page = WoltModalSheetPage(
+      stickyActionBar: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: SizedBox(
+                height: 20,
+                width: double.infinity,
+                child: Center(
+                  child: Text(i18n.cancel),
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: SizedBox(
+                height: 20,
+                width: double.infinity,
+                child: Center(
+                  child: Text(i18n.ok),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      topBarTitle: Text(i18n.homeNewTrainig),
+      isTopBarLayerAlwaysVisible: true,
+      trailingNavBarWidget: IconButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        padding: const EdgeInsets.all(16),
+        icon: const Icon(Icons.close),
+      ),
+      child: const Padding(
+        padding: EdgeInsets.fromLTRB(8, 8, 8, 400),
+        child: TrainingPopup(),
+      ),
+    );
+
+    WoltModalSheet.show<void>(
+      context: context,
+      pageListBuilder: (context) => [page],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
@@ -92,9 +153,7 @@ class _TrainingListState extends State<TrainingList> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.read<AppState>().addTraining(TrainingDao.empty());
-        },
+        onPressed: () => _buildPopup(),
         tooltip: i18n.homeAdd,
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
