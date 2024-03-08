@@ -32,6 +32,7 @@ class _TrainingTileState extends State<TrainingTile> {
             title: Text(i18n.trainingTileConfirmDelete),
             subtitle: Text(i18n.trainingTileConfirmDeleteSubtitle),
             trailing: Wrap(
+              spacing: 0,
               children: [
                 IconButton(
                   onPressed: () async {
