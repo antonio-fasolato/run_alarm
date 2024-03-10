@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:logging/logging.dart';
+import 'package:run_alarm/dao/training_dao.dart';
 import 'package:run_alarm/main.dart';
+import 'package:uuid/uuid.dart';
 
 class TrainingPopup extends StatefulWidget {
   final TrainingPopupBuilder builder;
@@ -13,13 +14,20 @@ class TrainingPopup extends StatefulWidget {
 }
 
 class _TrainingPopupState extends State<TrainingPopup> {
-  final _log = Logger((_TrainingPopupState).toString());
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  submitTraining() {
-    _log.info("Test");
+  TrainingDao? submitTraining() {
+    if (_formKey.currentState!.validate()) {
+      return TrainingDao(
+        const Uuid().v4().toString(),
+        _titleController.text,
+        _descriptionController.text,
+        DateTime.now(),
+      );
+    }
+    return null;
   }
 
   @override

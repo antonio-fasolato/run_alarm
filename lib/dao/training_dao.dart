@@ -38,7 +38,7 @@ class TrainingDao {
       "id": id,
       "title": title,
       "description": description,
-      "issuing_date": DateFormat("yyyy-MM-dd").format(createdAt),
+      "created_at": DateFormat("yyyy-MM-dd").format(createdAt),
     };
   }
 }

@@ -34,7 +34,7 @@ void main() {
 
 typedef TrainingPopupBuilder = void Function(
   BuildContext context,
-  void Function() submitFunction,
+  TrainingDao? Function() submitFunction,
 );
 
 class RunAlarmApp extends StatelessWidget {
@@ -64,7 +64,7 @@ class TrainingList extends StatefulWidget {
 }
 
 class _TrainingListState extends State<TrainingList> {
-  late void Function() _submitTraining;
+  late TrainingDao? Function() _submitTraining;
 
   @override
   void initState() {
@@ -103,9 +103,14 @@ class _TrainingListState extends State<TrainingList> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                _submitTraining();
-                Navigator.of(context).pop();
+              onPressed: () async {
+                var t = _submitTraining();
+                if (t != null) {
+                  var nav = Navigator.of(context);
+                  await TrainingsHelper.save(t);
+                  await _loadTrainings();
+                  nav.pop();
+                }
               },
               child: SizedBox(
                 height: 20,
