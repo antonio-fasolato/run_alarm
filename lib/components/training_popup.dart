@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
+import 'package:run_alarm/main.dart';
 
 class TrainingPopup extends StatefulWidget {
-  const TrainingPopup({super.key});
+  final TrainingPopupBuilder builder;
+
+  const TrainingPopup({super.key, required this.builder});
 
   @override
   State<TrainingPopup> createState() => _TrainingPopupState();
 }
 
 class _TrainingPopupState extends State<TrainingPopup> {
+  final _log = Logger((_TrainingPopupState).toString());
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+
+  submitTraining() {
+    _log.info("Test");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +29,7 @@ class _TrainingPopupState extends State<TrainingPopup> {
       throw Exception("No localization");
     }
 
+    widget.builder.call(context, submitTraining);
     return Form(
       key: _formKey,
       child: Column(

@@ -32,6 +32,11 @@ void main() {
   );
 }
 
+typedef TrainingPopupBuilder = void Function(
+  BuildContext context,
+  void Function() submitFunction,
+);
+
 class RunAlarmApp extends StatelessWidget {
   const RunAlarmApp({super.key});
 
@@ -59,6 +64,8 @@ class TrainingList extends StatefulWidget {
 }
 
 class _TrainingListState extends State<TrainingList> {
+  late void Function() _submitTraining;
+
   @override
   void initState() {
     super.initState();
@@ -97,6 +104,7 @@ class _TrainingListState extends State<TrainingList> {
             ),
             ElevatedButton(
               onPressed: () {
+                _submitTraining();
                 Navigator.of(context).pop();
               },
               child: SizedBox(
@@ -119,10 +127,13 @@ class _TrainingListState extends State<TrainingList> {
         padding: const EdgeInsets.all(16),
         icon: const Icon(Icons.close),
       ),
-      child: const Padding(
-        padding: EdgeInsets.fromLTRB(8, 8, 8, 400),
-        child: TrainingPopup(),
-      ),
+      child: Padding(
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 400),
+          child: TrainingPopup(
+            builder: (context, submitFunction) {
+              _submitTraining = submitFunction;
+            },
+          )),
     );
 
     WoltModalSheet.show<void>(
