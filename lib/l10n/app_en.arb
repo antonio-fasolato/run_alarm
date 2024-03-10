@@ -5,6 +5,9 @@
   "homeNoElements": "No trainings yet. Add one with the button below.",
   "homeTitle": "Trainings",
   "ok": "Ok",
+  "trainigPopupTitleValidation": "A title is required",
+  "trainingPopupDescription": "Description",
+  "trainingPopupTitle": "Title",
   "trainingTileConfirmDelete": "Really delete the training?",
   "trainingTileConfirmDeleteSubtitle": "The deletion is permanent"
 }
