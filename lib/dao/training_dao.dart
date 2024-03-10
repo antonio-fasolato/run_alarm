@@ -1,7 +1,10 @@
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 import 'package:uuid/uuid.dart';
 
 class TrainingDao {
+  static final _log = Logger((TrainingDao).toString());
+
   String id;
   String title;
   String description;
@@ -23,11 +26,13 @@ class TrainingDao {
         );
 
   factory TrainingDao.fromMap(Map<String, dynamic> map) {
+    _log.info(
+        'Date from String: ${map['created_at']} -> ${DateFormat("yyyy-MM-dd hh:mm:s").parse(map["created_at"])}');
     var toReturn = TrainingDao(
       map["id"],
       map["title"],
       map["description"],
-      DateFormat("yyyy-MM-dd").parse(map["created_at"]),
+      DateFormat("yyyy-MM-dd hh:mm:ss").parse(map["created_at"]),
     );
 
     return toReturn;
@@ -38,7 +43,7 @@ class TrainingDao {
       "id": id,
       "title": title,
       "description": description,
-      "created_at": DateFormat("yyyy-MM-dd").format(createdAt),
+      "created_at": DateFormat("yyyy-MM-dd hh:mm:ss").format(createdAt),
     };
   }
 }

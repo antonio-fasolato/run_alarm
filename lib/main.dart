@@ -133,7 +133,7 @@ class _TrainingListState extends State<TrainingList> {
         icon: const Icon(Icons.close),
       ),
       child: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 8, 8, 400),
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 200),
           child: TrainingPopup(
             builder: (context, submitFunction) {
               _submitTraining = submitFunction;
