@@ -41,6 +41,7 @@ dependencies:
   logging: ^1.2.0
   sqflite_common_ffi: ^2.3.2+1
   sqlite3_flutter_libs: ^0.5.20
+  wolt_modal_sheet: ^0.4.1
 
 
 

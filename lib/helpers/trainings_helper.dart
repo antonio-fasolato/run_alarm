@@ -15,4 +15,23 @@ class TrainingsHelper {
 
     return await db.delete('TRAININGS', where: "id = ?", whereArgs: [id]);
   }
+
+  static Future<int> save(TrainingDao t) async {
+    Database db = await DatabaseConnectionHelper().connect();
+
+    var res = await db.query('TRAININGS', where: 'id = ?', whereArgs: [t.id]);
+    if (res.isEmpty) {
+      return await db.insert(
+        'TRAININGS',
+        t.toMap(),
+      );
+    } else {
+      return await db.update(
+        'TRAININGS',
+        t.toMap(),
+        where: 'id = ?',
+        whereArgs: [t.id],
+      );
+    }
+  }
 }

@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:run_alarm/components/training_list.dart';
 import 'package:run_alarm/dao/training_dao.dart';
-import 'package:run_alarm/helpers/trainings_helper.dart';
 import 'package:run_alarm/state/app_state.dart';
-import 'package:run_alarm/training_tile.dart';
 
 void main() {
   Logger.root.onRecord.listen((record) {
@@ -30,6 +29,11 @@ void main() {
   );
 }
 
+typedef TrainingPopupBuilder = void Function(
+  BuildContext context,
+  TrainingDao? Function() submitFunction,
+);
+
 class RunAlarmApp extends StatelessWidget {
   const RunAlarmApp({super.key});
 
@@ -49,55 +53,3 @@ class RunAlarmApp extends StatelessWidget {
   }
 }
 
-class TrainingList extends StatefulWidget {
-  const TrainingList({super.key});
-
-  @override
-  State<TrainingList> createState() => _TrainingListState();
-}
-
-class _TrainingListState extends State<TrainingList> {
-  @override
-  void initState() {
-    super.initState();
-
-    _loadTrainings();
-  }
-
-  _loadTrainings() async {
-    context
-        .read<AppState>()
-        .setTrainings(await TrainingsHelper.getAllTrainings());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var i18n = AppLocalizations.of(context);
-    if (i18n == null) {
-      throw Exception("No localization");
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(i18n.homeTitle),
-      ),
-      body: Center(
-        child: ListView(
-          children: context
-              .watch<AppState>()
-              .trainings
-              .map((e) => TrainingTile(training: e))
-              .toList(),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.read<AppState>().addTraining(TrainingDao.empty());
-        },
-        tooltip: i18n.homeAdd,
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
